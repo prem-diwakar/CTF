@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>🌸 The Quest 🌸</title>
+<style>
+    body {
+        background: linear-gradient(135deg, #ffe6f0, #e6f7ff);
+        font-family: 'Comic Sans MS', cursive, sans-serif;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+        color: #444;
+        overflow-x: hidden;
+        height: 100vh;
+    }
+    header {
+        padding: 40px 20px;
+        font-size: 2em;
+        color: #ff6699;
+    }
+    .message {
+        font-size: 1.2em;
+        padding: 0 20px;
+    }
+    .hearts {
+        margin: 20px auto;
+        position: relative;
+        width: 200px;
+        height: 100px;
+    }
+    .heart {
+        color: #ff6699;
+        font-size: 2em;
+        position: absolute;
+        transition: transform 0.3s ease, opacity 0.3s ease;
+        cursor: pointer;
+    }
+    .heart:hover {
+        transform: scale(1.4);
+    }
+    #secret-heart {
+        position: absolute;
+        left: 80px;
+        top: 30px;
+        opacity: 0.4;
+        pointer-events: none;
+    }
+    .hint {
+        margin-top: 20px;
+        font-style: italic;
+        font-size: 0.9em;
+        color: #888;
+    }
+    #riddle-box {
+        display: none;
+        margin-top: 20px;
+        background: #fff3f7;
+        padding: 15px;
+        border-radius: 12px;
+        width: 300px;
+        margin-left: auto;
+        margin-right: auto;
+        box-shadow: 0 0 10px rgba(255, 102, 153, 0.2);
+    }
+    input[type="text"] {
+        padding: 5px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        margin-top: 10px;
+        width: 80%;
+    }
+    button {
+        background: #ff99bb;
+        border: none;
+        padding: 6px 12px;
+        border-radius: 8px;
+        margin-top: 10px;
+        color: white;
+        cursor: pointer;
+    }
+    /* Rose petal effect */
+    .petal {
+        position: fixed;
+        top: -10px;
+        width: 20px;
+        height: 20px;
+        background: pink;
+        border-radius: 50%;
+        animation: fall linear forwards;
+        opacity: 0.8;
+        pointer-events: none;
+    }
+    @keyframes fall {
+        0% { transform: translateY(0) rotate(0deg); }
+        100% { transform: translateY(110vh) rotate(360deg); }
+    }
+    /* Romantic reveal overlay */
+    #final-reveal {
+        display: none;
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 236, 240, 0.95);
+        z-index: 9999;
+        text-align: center;
+        padding-top: 20vh;
+    }
+    #final-reveal h1 {
+        color: #d6336c;
+        font-size: 2em;
+        margin-bottom: 30px;
+        animation: fadeIn 2s ease forwards;
+    }
+    @keyframes fadeIn {
+        from {opacity: 0;}
+        to {opacity: 1;}
+    }
+    .reveal-btn {
+        display: inline-block;
+        background: #ff6699;
+        color: white;
+        font-size: 1.4em;
+        padding: 15px 25px;
+        border-radius: 50px;
+        text-decoration: none;
+        transition: background 0.3s;
+        animation: fadeIn 3s ease forwards;
+    }
+    .reveal-btn:hover {
+        background: #ff3366;
+    }
+</style>
+</head>
+<body>
+
+<header>🌸 Welcome to The Quest 🌸</header>
+
+<p class="message">
+    I've hidden a special treasure for you 💌.<br>
+    Solve my puzzle and unlock something magical.
+</p>
+
+<div class="hearts">
+    <span class="heart" style="left:0; top:10px;">💖</span>
+    <span class="heart" style="left:40px; top:50px;">💗</span>
+    <span class="heart" style="left:130px; top:20px;">💓</span>
+    <span class="heart" id="secret-heart">💝</span>
+</div>
+
+<p class="hint">
+    Tip: Look deeper... sometimes love hides in code.
+</p>
+
+<div id="riddle-box">
+    <p><strong>Riddle:</strong></p>
+    <p>
+        I am not alive, but I can grow.  
+        I have no mouth, but I can roar.  
+        What am I? 🔥
+    </p>
+    <input type="text" id="riddle-answer" placeholder="Type your answer...">
+    <br>
+    <button id="submit-answer">Submit</button>
+</div>
+
+<!-- Hidden ROT13 clue -->
+<!-- ROT13: Fbyir gur evqqyr gb haybpx gur unaeg -->
+
+<!-- Final romantic reveal -->
+<div id="final-reveal">
+    <h1>💖 Every puzzle has one final reward,<br>and my heart’s puzzle has always been you. 💖</h1>
+    <a href="https://prem-diwakar.github.io/SaraPD/" target="_blank" class="reveal-btn">💌 Unlock your Surprise</a>
+</div>
+
+<script>
+let riddleShown = false;
+
+// Step 1: Show riddle when any visible heart is clicked
+document.querySelectorAll('.heart:not(#secret-heart)').forEach(heart => {
+    heart.addEventListener('click', () => {
+        if (!riddleShown) {
+            document.getElementById('riddle-box').style.display = 'block';
+            riddleShown = true;
+        }
+    });
+});
+
+// Step 2: Riddle answer check
+document.getElementById('submit-answer').addEventListener('click', () => {
+    const answer = document.getElementById('riddle-answer').value.trim().toLowerCase();
+    if (answer === "fire") {
+        alert("🔥 Correct! The heart is now unlocked.");
+        let secret = document.getElementById('secret-heart');
+        secret.style.opacity = 1;
+        secret.style.pointerEvents = 'auto';
+    } else {
+        alert("❌ That’s not it, try again!");
+    }
+});
+
+// Step 3: Romantic final reveal on secret heart click
+document.getElementById('secret-heart').addEventListener('click', function() {
+    launchPetals();
+    document.getElementById('final-reveal').style.display = 'block';
+});
+
+// Function for animated falling petals
+function launchPetals() {
+    for (let i = 0; i < 30; i++) {
+        const petal = document.createElement('div');
+        petal.className = 'petal';
+        petal.style.left = Math.random() * 100 + 'vw';
+        petal.style.background = ['pink', '#ffb6c1', '#ffc0cb'][Math.floor(Math.random() * 3)];
+        petal.style.animationDuration = (Math.random() * 3 + 4) + 's';
+        petal.style.animationDelay = (Math.random() * 5) + 's';
+        document.body.appendChild(petal);
+        petal.animate(
+            [{ transform: `translateY(0) rotate(0deg)` }, { transform: `translateY(110vh) rotate(360deg)` }],
+            { duration: Math.random() * 5000 + 4000, iterations: 1 }
+        ).onfinish = () => petal.remove();
+    }
+}
+</script>
+
+</body>
+</html>
