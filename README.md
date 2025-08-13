@@ -1,2 +1,2 @@
-# CTF
+# Quest
 Simple CTF 
